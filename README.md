@@ -17,9 +17,9 @@ Read this article for an overview of how to create a
 
 ## Setup
 
-### Clone Bash version
+### Clone and run bash example
 
-The basis for this package will be a Bash command-line script example that you can find here: https://github.com/jdmar3/galo.sh/
+The model for your Node command line package will be a Bash command-line script example that you can find here: https://github.com/jdmar3/galo.sh/
 
 In order for you to sucessfully complete this assignment you might want to clone and run `galo.sh`.
 This will provide you with an example of how your new app, `galosh.js` should run. 
@@ -27,6 +27,8 @@ This will provide you with an example of how your new app, `galosh.js` should ru
 So, in a directory other than the working directory for this assignment, clone the `galo.sh` repo.
 
 You must have `curl` and `jq` installed. Links to downloads are listed in the `galo.sh` repo README. They are available as package in most LInux distributions. MacOS users will have to download and install `jq`, but `curl` should already be installed.
+
+Run it with different options to see how it responds and then use that information to model how your command line package responds. There are slight differences specified below. You do not need verbose output, for example.
 
 ## Assessment
 
@@ -50,7 +52,9 @@ Your command line app should be able to do the following:
 
 To get started, initialize your repo as a package by running `npm init`. 
 
-Make sure that the license you select is the same as the one in the LICENSE file (it will be GPL-3.0-or-later for this and most assignments). This is always going to be expected in assignments.
+Make sure that the license you select is the same as the one in the LICENSE file (it will be GPL-3.0-or-later for this and most assignments). This is always going to be expected in assignments. 
+
+The list of licenses is available here: https://spdx.org/licenses/
 
 The test script should be: 
 
@@ -235,7 +239,7 @@ More about using fetch is available in the fetch documentation, which is linked 
 Below, we've defined `days` corresponding to the command line argument `-d`. We'll assume `args` is defined from minimist's output, which is the parsed command line arguments.
 
 ```
-args.d 
+const days = args.d 
 
 if (days == 0) {
   console.log("today.")
