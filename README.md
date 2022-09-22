@@ -4,7 +4,7 @@ This assignment will help you learn to create an installable Node.js command lin
 
 ## DO NOT CLONE THIS REPOSITORY DIRECTLY
 
-Use the GitHub classroom link instead: 
+Use the GitHub classroom link instead: https://classroom.github.com/a/BWDG9CJ7
 
 **_If you clone this repo directly, it will not be added to the organization as an individual repo associated with your account and you will not be able to push to it._**
 
