@@ -119,16 +119,147 @@ Usage: galosh.js [options] -[n|s] LATITUDE -[e|w] LONGITUDE -z TIME_ZONE
 
 ### Timezone
 
+You have installed the `moment-timezone` package, which will let you attempt to extract the system timezone.
+
+This should do that for you. Remember to import `moment` from the package to load the dependency.
+
+```
+const timezone = moment.tz.guest()
+```
+
 ### Find the appropriate request URL
+
+Use the URL builder for the Open-Meteo API to find all of the variables needed to construct your URL string: https://open-meteo.com/en/docs#api_form
+
+One approach is to select all of the daily weather variables and then find the one that you want.
+
+This is not the greatest approach because you are moving more data than you need, which slows you down. 
+
+Ideally you want something that looks more like this: 
+
+```JSON
+{"latitude":35.875,"longitude":-79.0,"generationtime_ms":0.44608116149902344,"utc_offset_seconds":-14400,"timezone":"America/New_York","timezone_abbreviation":"EDT","elevation":127.0,"current_weather":{"temperature":66.7,"windspeed":2.9,"winddirection":212.0,"weathercode":0.0,"time":"2022-09-22T06:00"},"daily_units":{"time":"iso8601","precipitation_hours":"h"},"daily":{"time":["2022-09-22","2022-09-23","2022-09-24","2022-09-25","2022-09-26","2022-09-27","2022-09-28"],"precipitation_hours":[0.0,0.0,0.0,3.0,3.0,0.0,0.0]}}
+```
+
+Or, in parsed form:
+
+```JSON
+{
+  "latitude": 35.875,
+  "longitude": -79,
+  "generationtime_ms": 0.44608116149902344,
+  "utc_offset_seconds": -14400,
+  "timezone": "America/New_York",
+  "timezone_abbreviation": "EDT",
+  "elevation": 127,
+  "current_weather": {
+    "temperature": 66.7,
+    "windspeed": 2.9,
+    "winddirection": 212,
+    "weathercode": 0,
+    "time": "2022-09-22T06:00"
+  },
+  "daily_units": {
+    "time": "iso8601",
+    "precipitation_hours": "h"
+  },
+  "daily": {
+    "time": [
+      "2022-09-22",
+      "2022-09-23",
+      "2022-09-24",
+      "2022-09-25",
+      "2022-09-26",
+      "2022-09-27",
+      "2022-09-28"
+    ],
+    "precipitation_hours": [
+      0,
+      0,
+      0,
+      3,
+      3,
+      0,
+      0
+    ]
+  }
+}
+```
+
+The variable that you are most interested in, probably, is whether or not it will be raining on a given day.
+The "Precipitation hours" varialbe is well-suited to this.
+If the value returned is 0, then it means that there will be zero hours of precipitation in a given day. 
+If it is greater than zero, then there will be that many days of precipitation in a given day. 
+
+That variable returns an array with 7 values in it corresponding to days starting with today. From the above JSON:
+
+```
+"precipitation_hours":[0.0,0.0,0.0,3.0,3.0,0.0,0.0]
+```
+
+To refer to a particular value in the array, use the index (assume our JSON is stored as `data`):
+
+`data.daily.precipitation_hours[0]` would refer to TODAY. `data.daily.precipitation_hours[1]` would refer to TOMORROW, and so on.
 
 ### Construct a `fetch()` API call that will return the JSON data you need.
 
+Using the URL that you have constructed, you will need to create an API call using `fetch()`. 
+
+Remember that fetch is asynchrounous by default, so we will use await to allow time for the API server to respond.
+
+```
+// Make a request
+const response = await fetch('URL_GOES_HERE');
+```
+
+You will need to insert your command line option variables into your URL string. 
+Remember that `+` concatenates strings (it is not just a math operator).
+
+So if you have a variable for, say, latitude, and you need to put it in a string, it can look something like this: 
+
+`'.com?latitude=' + latitude + '&longitude=' + `
+
+That will produce a string that has the value stored in `latitude` concatenated between the two strings on either side of the `+` operator.
+ 
+Once you have the response, get JSON out of it:
+
+```
+// Get the data from the request
+const data = await response.json();
+```
+
+More about using fetch is available in the fetch documentation, which is linked from the schedule pages. 
+
 ### Create the response text using conditional statements.
+
+Below, we've defined `days` corresponding to the command line argument `-d`. We'll assume `args` is defined from minimist's output, which is the parsed command line arguments.
+
+```
+args.d 
+
+if (days == 0) {
+  console.log("today.")
+} else if (days > 1) {
+  console.log("in " + days + " days.")
+} else {
+  console.log("tomorrow.")
+}
+```
+
+In the above conditional, if `-d 
 
 ### Test your code
 
 Make sure that your code works by doing the following:
 
+1. `npm link` (should link/install your package locally)
+2. `npm test` (should run your test script defined in package.json)
+3. `node cli.js -n 35 -w 79 -t America/New_York -d 0` (should return today's weather)
+4. `galosh.js -n 35 -w 79 -t America/New_York -d 0` (should return the same as above)
+5. `galosh.js -n 35 -w 79 -t America/New_York` (should return tomorrow's weather by default)
+6. `galosh.js -n 35 -w 79` (should return tomorrow's weather by default and get the timezone from the system)
+7. `galosh.js -h` (should return help message and exit 0)
+8. `galosh.js -j` (should return JSON weather data and exit 0)
+9. `npm unlink` (should link/uninstall your package locally)
 
-
-
+If any of those things are not happening, then you're missing something somewhere. 
