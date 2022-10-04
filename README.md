@@ -13,7 +13,7 @@ Use the GitHub classroom link instead: https://classroom.github.com/a/BWDG9CJ7
 The purpose of this assignment is to create an installable Node.js command line application package.
 This is relatively straightforward. 
 
-Read this article for an overview of how to create a 
+Read this article for an overview of how to create a Node.js CLI package: https://x-team.com/blog/a-guide-to-creating-a-nodejs-command/
 
 ## Setup
 
