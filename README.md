@@ -128,7 +128,7 @@ You have installed the `moment-timezone` package, which will let you attempt to 
 This should do that for you. Remember to import `moment` from the package to load the dependency.
 
 ```
-const timezone = moment.tz.guest()
+const timezone = moment.tz.guess()
 ```
 
 ### Find the appropriate request URL
