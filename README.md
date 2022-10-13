@@ -263,7 +263,7 @@ Make sure that your code works by doing the following:
 5. `galosh.js -n 35 -w 79 -t America/New_York` (should return tomorrow's weather by default)
 6. `galosh.js -n 35 -w 79` (should return tomorrow's weather by default and get the timezone from the system)
 7. `galosh.js -h` (should return help message and exit 0)
-8. `galosh.js -j` (should return JSON weather data and exit 0)
+8. `galosh.js -j` (should return JSON and exit)
 9. `npm unlink` (should link/uninstall your package locally)
 
 If any of those things are not happening, then you're missing something somewhere. 
