@@ -116,7 +116,7 @@ Usage: galosh.js [options] -[n|s] LATITUDE -[e|w] LONGITUDE -z TIME_ZONE
     -h            Show this help message and exit.
     -n, -s        Latitude: N positive; S negative.
     -e, -w        Longitude: E positive; W negative.
-    -z            Time zone: uses tz.guess() from moment-timezone by default.
+    -t            Time zone: uses tz.guess() from moment-timezone by default.
     -d 0-6        Day to retrieve weather: 0 is today; defaults to 1.
     -j            Echo pretty JSON from open-meteo API and exit.
 ```
@@ -258,9 +258,9 @@ Make sure that your code works by doing the following:
 
 1. `npm link` (should link/install your package locally)
 2. `npm test` (should run your test script defined in package.json)
-3. `node cli.js -n 35 -w 79 -z America/New_York -d 0` (should return today's weather)
-4. `galosh.js -n 35 -w 79 -z America/New_York -d 0` (should return the same as above)
-5. `galosh.js -n 35 -w 79 -z America/New_York` (should return tomorrow's weather by default)
+3. `node cli.js -n 35 -w 79 -t America/New_York -d 0` (should return today's weather)
+4. `galosh.js -n 35 -w 79 -t America/New_York -d 0` (should return the same as above)
+5. `galosh.js -n 35 -w 79 -t America/New_York` (should return tomorrow's weather by default)
 6. `galosh.js -n 35 -w 79` (should return tomorrow's weather by default and get the timezone from the system)
 7. `galosh.js -h` (should return help message and exit 0)
 8. `galosh.js -j` (should return JSON and exit)
