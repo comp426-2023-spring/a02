@@ -44,7 +44,7 @@ Your command line app should be able to do the following:
 6. If the daily precipitation hours in the JSON for the day you are targeting is not 0, log "You might need your galoshes " onto STDOUT. If the value is zero, then log "You will not need your galoshes " onto STDOUT.
 7. If `-d 0` then log "today." onto STDOUT. If `-d [2-6]` then log "in NUMBER days." onto STDOUT. If `-d 1` or there is no `-d` specified, then log "tomorrow." onto STDOUT.
 8. All of the latitude (`-n` and `-s`) and longitude (`-e` and `-w`) should take any number and convert it to a number with no more than 2 places to the right of the decimal AND be either a positive or negative number as appropriate (i.e., `-n` and `-e` should be positive numbers and `-s` and `-w` should be negative, so that they can be sent to the API correctly.
-9. Your app should guess the system timezome and use it if there is no `-z` specified in the command line arguments.
+9. Your app should guess the system timezome and use it if there is no `-t` specified in the command line arguments.
 
 ## Instructions
 
@@ -58,13 +58,13 @@ The list of licenses is available here: https://spdx.org/licenses/
 
 The test script should be: 
 
-`node cli.js -n 35.92 -w 79.05 -z America/New_York`
+`node cli.js -n 35.92 -w 79.05 -t America/New_York`
 
 In the resulting `package.json` it should have this:
 
 ```
   "scripts": {
-    "test": "node cli.js -n 35.92 -w 79.05 -z America/New_York"
+    "test": "node cli.js -n 35.92 -w 79.05 -t America/New_York"
   },
 ```
 
@@ -112,7 +112,7 @@ One of the first things you will want to do is look or the `-h` option in the co
 0 is the exit code for "everything worked." 1 means "there was an error."
 
 ```
-Usage: galosh.js [options] -[n|s] LATITUDE -[e|w] LONGITUDE -z TIME_ZONE
+Usage: galosh.js [options] -[n|s] LATITUDE -[e|w] LONGITUDE -t TIME_ZONE
     -h            Show this help message and exit.
     -n, -s        Latitude: N positive; S negative.
     -e, -w        Longitude: E positive; W negative.
